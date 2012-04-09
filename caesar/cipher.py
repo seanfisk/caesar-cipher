@@ -1,6 +1,8 @@
 """:mod:`caesar.cipher` --- Implementation of the Caesar cipher"""
 
-ASCII_LETTER_A_OFFSET = ord('A')
+ASCII_LOWER_OFFSET = ord('a')
+ASCII_UPPER_OFFSET = ord('A')
+ALPHABET_SIZE = 26
 
 def caesar_char(char, key):
     """Caesar cipher for a single character.
@@ -13,8 +15,11 @@ def caesar_char(char, key):
     :rtype: :class:`str`
     """
     if char.isalpha():
-        char = chr((ord(char.upper()) - ASCII_LETTER_A_OFFSET + key) % 26 +
-                   ASCII_LETTER_A_OFFSET)
+        if char.islower():
+            offset = ASCII_LOWER_OFFSET
+        else:
+            offset = ASCII_UPPER_OFFSET
+        char = chr((ord(char) - offset + key) % ALPHABET_SIZE + offset)
     return char
 
 # based on: <http://code.activestate.com/recipes/577960-caesar-cipher/>
